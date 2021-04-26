@@ -1,0 +1,18 @@
+{
+  "name": "shut-cracker-fly-jdf7q",
+  "productName": "shut-cracker-fly-jdf7q",
+  "description": "My Electron application description",
+  "keywords": [],
+  "main": "./main.js",
+  "version": "1.0.0",
+  "author": "skyzero",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "electron": "12.0.5"
+  }
+}
