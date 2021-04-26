@@ -1,18 +1,23 @@
 {
-  "name": "shut-cracker-fly-jdf7q",
-  "productName": "shut-cracker-fly-jdf7q",
-  "description": "My Electron application description",
-  "keywords": [],
-  "main": "./main.js",
+  "name": "cofa_server",
   "version": "1.0.0",
-  "author": "skyzero",
+  "description": "Community For All Server",
+  "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "test": "echo \"Error: no test specified\" && exit 1",
+	"start": "electron ."
   },
-  "dependencies": {
-    "express": "^4.17.1"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/faciensamet/cofa_server.git"
   },
+  "author": "faciensamet",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/faciensamet/cofa_server/issues"
+  },
+  "homepage": "https://github.com/faciensamet/cofa_server#readme",
   "devDependencies": {
-    "electron": "12.0.5"
+    "electron": "^12.0.5"
   }
 }
