@@ -1,6 +1,8 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
 
+const cofa_server = require("./cofa_server")
+
 function createWindow () {
   const win = new BrowserWindow({
     width: 800,
@@ -11,6 +13,7 @@ function createWindow () {
   })
 
   win.loadFile('index.html')
+  cofa_server.Start();
 }
 
 app.whenReady().then(() => {
