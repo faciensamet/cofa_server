@@ -21,20 +21,16 @@ var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('db');
 
 // create db table  username = base64,  content = base64
-db.run('CREATE TABLE if not exists "contents" (	"no" INTEGER, "uid" TEXT, "content" TEXT, "date" TEXT DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY("no" AUTOINCREMENT));');
+db.run('CREATE TABLE if not exists "data" (	"no" INTEGER, "uid" TEXT, "content" TEXT, "date" TEXT DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY("no" AUTOINCREMENT));');
 db.run('CREATE TABLE if not exists "user" (	"no" INTEGER, "uid" TEXT, "name" TEXT, "message" TEXT, "join_date" TEXT DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY("no" AUTOINCREMENT));');
 
 exports.Start = () => 
 {
     app.listen(config.port)
-    app.get('/', function (req, res) 
-    {
-        res.send('Hello World - ' + config.serverName);
-    });
-
+    
     app.get("/v1/add", function(req, res)
     {
-        db.run('INSERT INTO "contents" ("username", "content") VALUES ("' + req.query.u + '", "' + req.query.c + '");');
+        db.run('INSERT INTO "data" ("uid", "content") VALUES ("' + req.query.u + '", "' + req.query.c + '");');
         res.send("1");
     });
 
@@ -46,7 +42,7 @@ exports.Start = () =>
 
         var result = [];
 
-        db.all('select * from contents where no > ' + start + ' limit 10', [], (err, rows) => 
+        db.all('select no, (select name from user where user.uid = data.uid limit 1) as name, content, date from data where no > ' + start + ' order by no limit 10 ', [], (err, rows) => 
         {
             if (err) 
             {
