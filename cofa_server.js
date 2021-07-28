@@ -4,10 +4,10 @@ const app = express()
 var config = 
 {
     serverName:"Cofa #" + GetRandomInt(100000, 999999),
-    port: 30123,
+    port: 80,
   
-    open_server: 1, // 0 - private, 1 - open(anyone can see your server)
-    permission_write: 0, // 0 - all, 1 - authorized person
+    open: 1, // 0 - private, 1 - open(anyone can see your server)
+    permission: 0, // 0 - all, 1 - authorized person only
 };
 
 function GetRandomInt(min, max)
@@ -27,6 +27,29 @@ db.run('CREATE TABLE if not exists "user" (	"no" INTEGER, "uid" TEXT, "name" TEX
 exports.Start = () => 
 {
     app.listen(config.port)
+
+    app.get("/", function(req, res)
+    {
+        var start = req.query.s;
+        if(start==undefined)
+            start = 0;
+
+        var result = [];
+
+        db.all('select no, (select name from user where user.uid = data.uid limit 1) as name, content, date from data where no > ' + start + ' order by no limit 10 ', [], (err, rows) => 
+        {
+            if (err) 
+            {
+                throw err;
+            }
+            rows.forEach((row) => 
+            {
+                result.push(row);
+            });
+
+            res.send(JSON.stringify(result));
+        });
+    });
     
     app.get("/v1/add", function(req, res)
     {
